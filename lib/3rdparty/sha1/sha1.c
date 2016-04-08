@@ -8,7 +8,13 @@
 
 /* this is only to get definitions for memcpy(), ntohl() and htonl() */
 #include <string.h>
-#include <arpa/inet.h>
+
+#if defined(WIN32) || defined(__WIN32) || defined(__WIN32__)
+   #include <winsock2.h>
+   #include <stdint.h>
+#else
+   #include <arpa/inet.h>
+#endif
 
 #include "sha1.h"
 
