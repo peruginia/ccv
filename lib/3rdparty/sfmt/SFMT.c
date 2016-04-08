@@ -304,7 +304,7 @@ void sfmt_fill_array32(sfmt_t * sfmt, uint32_t *array, int size) {
  * before the first call of this function. This function can not be
  * used after calling gen_rand function, without initialization.
  *
- * @param array an array where pseudorandom 64-bit integers are filled
+ * @param array an array wahere pseudorandom 64-bit integers are filled
  * by this function.  The pointer to the array must be "aligned"
  * (namely, must be a multiple of 16) in the SIMD version, since it
  * refers to the address of a 128-bit integer.  In the standard C
@@ -338,8 +338,13 @@ void sfmt_fill_array64(sfmt_t * sfmt, uint64_t *array, int size) {
  * @param size the size of the array
  * @param rsize the size of each record in the array
  */
-#if !defined(__OpenBSD__) && !defined(__FreeBSD__)
-#include <alloca.h>
+#if defined(WIN32) || defined(__WIN32) || defined(__WIN32__)
+   // For alloca().
+   #include <malloc.h>
+#else
+   #if !defined(__OpenBSD__) && !defined(__FreeBSD__)
+      #include <alloca.h>
+   #endif
 #endif
 
 void sfmt_genrand_shuffle(sfmt_t * sfmt, void *array, int size, int rsize) {
