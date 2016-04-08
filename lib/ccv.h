@@ -16,8 +16,14 @@
 #include <float.h>
 #include <math.h>
 #include <assert.h>
-#if !defined(__OpenBSD__) && !defined(__FreeBSD__)
-#include <alloca.h>
+
+#if defined(WIN32) || defined(__WIN32) || defined(__WIN32__)
+   // For alloca().
+   #include <malloc.h>
+#else
+   #if !defined(__OpenBSD__) && !defined(__FreeBSD__)
+      #include <alloca.h>
+   #endif
 #endif
 
 #define CCV_PI (3.141592653589793)
